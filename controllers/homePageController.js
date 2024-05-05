@@ -79,6 +79,7 @@ exports.getAllPosters = async (req, res) => {
     }
 };
 
+
 exports.getPosterById = async (req, res) => {
     try {
         const poster = await Poster.findById(req.params.id);
