@@ -6,7 +6,9 @@ exports.login = async (req, res) => {
     try {
         const { username, password } = req.body
         console.log(username)
-        const user = await User.findOne({ username })
+        const user = await User.findOne({ username });
+        console.log(user)
+        console.log(typeof user.isAdmin)
         if (!user) {
             return res.status(400).json({ sucess: false, 'error': "User not Found" });
         }
@@ -14,7 +16,8 @@ exports.login = async (req, res) => {
         if (!passwordCompare) {
             return res.status(400).json({ sucess: false, 'error': "Wrong Credentials" });
         }
-        const token = jwt.sign({id:user._id}, process.env.MY_SECRET, { expiresIn: '7d' });
+        
+        const token = jwt.sign({id:user._id, isAdmin:user.isAdmin}, process.env.MY_SECRET, { expiresIn: '7d' });
         await res.cookie('authToken', token, {
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -29,6 +32,7 @@ exports.login = async (req, res) => {
 exports.getUser = async (req, res) => {
     try {
         const userId = req.user.id;
+        console.log(req.user)
         const user = await User.findById(userId).select("-password");
         res.send(user);
     } catch (error) {

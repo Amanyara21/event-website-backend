@@ -19,6 +19,8 @@ app.get('/',(req, res)=>{
 })
 app.use('/api', require('./routes/teamRegistrationRoute'))
 app.use('/api', require('./routes/authRoute'))
+app.use('/api', require('./routes/uploadRoute'))
+app.use('/api', require('./routes/homePageRoute'))
 
  
 app.listen(port, () => {

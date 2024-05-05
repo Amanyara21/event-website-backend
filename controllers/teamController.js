@@ -34,8 +34,8 @@ exports.createTeam = async (req, res) => {
         const salt = await bcryptjs.genSalt(10);
         const secPassword = await bcryptjs.hash(password, salt);
 
-        const user = await User({ username, password: secPassword })
-        await user.save()
+        const user = await User.create({ username, password: secPassword, team:Team._id })
+        // await user.save()
         res.status(201).json({ success: true, data: { team, credentials: { user } } });
 
     } catch (err) {

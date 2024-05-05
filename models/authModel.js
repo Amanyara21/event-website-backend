@@ -9,8 +9,16 @@ const authSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    team:{
+        type:mongoose.Schema.ObjectId,
+        ref:'Team'
+    },
+    isAdmin:{
+        type:Boolean,
+        default:false
     }
 });
 
-const Auth = mongoose.model('auth',authSchema)
+const Auth = mongoose.model('User',authSchema)
 module.exports = Auth
